@@ -85,14 +85,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onMyLocationChange(Location location) {
                 latLngs.add(new LatLng(location.getLatitude() ,location.getLongitude()));
-                if (latLngs.size()==1){
+                if (latLngs.size()==1 || latLngs.size()%100==0){
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude() ,
                         location.getLongitude()),16));}
                 if (latLngs.size()>=2)
                 {
                      mMap.addPolyline(new PolylineOptions()
-                            .addAll(latLngs)
+                            .add(latLngs.get(latLngs.size()-1),latLngs.get(latLngs.size()-2))
                             .width(5).color(Color.RED));
+                     latLngs.remove(0);
                 }
             }
         });
